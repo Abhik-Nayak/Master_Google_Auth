@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -30,6 +31,7 @@ connectDB();
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
+app.use('/api/auth', authRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
@@ -37,3 +39,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+// app.all('*', (req, res, next) => {
+//     next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));
+// });
